@@ -1,0 +1,6 @@
+name: FlyingChat
+version: '1.0-SNAPSHOT'
+main: dev.efekos.flyingChat.FlyingChat
+api-version: '1.21'
+authors: [efekos]
+description: Chat messages fly away from your head.
