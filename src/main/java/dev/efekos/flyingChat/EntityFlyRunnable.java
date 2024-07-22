@@ -1,13 +1,14 @@
 package dev.efekos.flyingChat;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class EntityFlyRunnable extends BukkitRunnable {
 
-    private Entity entity;
+    private final TextDisplay entity;
 
-    public EntityFlyRunnable(Entity entity) {
+    public EntityFlyRunnable(TextDisplay entity) {
         this.entity = entity;
     }
 
@@ -16,9 +17,11 @@ public class EntityFlyRunnable extends BukkitRunnable {
     @Override
     public void run() {
         if(++ticks>60){
+            entity.remove();
             cancel();
             return;
         }
+        entity.setTextOpacity((byte) (entity.getTextOpacity()-4));
         entity.teleport(entity.getLocation().add(0,.1,0));
     }
 }
