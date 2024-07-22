@@ -24,6 +24,7 @@ public final class FlyingChat extends JavaPlugin implements Listener {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
 
+        saveDefaultConfig();
     }
 
     @Override
@@ -42,13 +43,14 @@ public final class FlyingChat extends JavaPlugin implements Listener {
            public void run() {
                Player p = e.getPlayer();
                World world = p.getWorld();
-               TextDisplay entity = (TextDisplay) world.spawnEntity(p.getLocation().add(0,2,0), EntityType.TEXT_DISPLAY);
+               TextDisplay entity = world.createEntity(p.getLocation().add(0,2,0), TextDisplay.class);
                entity.setAlignment(TextDisplay.TextAlignment.CENTER);
                entity.setBillboard(Display.Billboard.CENTER);
-               entity.setText(findTextColor(p)+e.getMessage());
+               entity.setText(findTextColor(p,instance)+e.getMessage());
                entity.setShadowed(true);
                entity.setBackgroundColor(Color.fromARGB(0,0,0,0));
                entity.setTransformation(new Transformation(new Vector3f(),new Quaternionf(),new Vector3f(1.5f,1.5f,1.5f),new Quaternionf()));
+               world.addEntity(entity);
                new EntityFlyRunnable(entity).runTaskTimer(instance,1,1);
            }
        }.runTaskLater(this,5);
@@ -71,9 +73,14 @@ public final class FlyingChat extends JavaPlugin implements Listener {
             ChatColor.LIGHT_PURPLE
     };
 
-    private ChatColor findTextColor(Player player){
-        for (ChatColor color : ALL_COLORS) if(player.hasPermission("flyingchat."+color.name())) return color;
-        return ChatColor.WHITE;
+    private ChatColor findTextColor(Player player,FlyingChat i){
+        try {
+            if(player.isOp())return ChatColor.valueOf(i.getConfig().getString("default-op-color","YELLOW"));
+            for (ChatColor color : ALL_COLORS) if(player.hasPermission("flyingchat."+color.name())) return color;
+            return ChatColor.valueOf(i.getConfig().getString("default-color","WHITE"));
+        } catch (Exception e){
+            throw new RuntimeException("FlyingChat configuration is broken, please make sure you put valid inputs to op-color and default-color",e);
+        }
     }
 
 }
