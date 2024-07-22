@@ -45,7 +45,7 @@ public final class FlyingChat extends JavaPlugin implements Listener {
                TextDisplay entity = (TextDisplay) world.spawnEntity(p.getLocation().add(0,2,0), EntityType.TEXT_DISPLAY);
                entity.setAlignment(TextDisplay.TextAlignment.CENTER);
                entity.setBillboard(Display.Billboard.CENTER);
-               entity.setText(findColor(p)+e.getMessage());
+               entity.setText(findTextColor(p)+e.getMessage());
                entity.setShadowed(true);
                entity.setBackgroundColor(Color.fromARGB(0,0,0,0));
                entity.setTransformation(new Transformation(new Vector3f(),new Quaternionf(),new Vector3f(1.5f,1.5f,1.5f),new Quaternionf()));
@@ -70,12 +70,6 @@ public final class FlyingChat extends JavaPlugin implements Listener {
             ChatColor.BLACK,
             ChatColor.LIGHT_PURPLE
     };
-
-    private Color findColor(Player player) {
-        ChatColor color = findTextColor(player);
-        java.awt.Color c = color.asBungee().getColor();
-        return Color.fromRGB(c.getRed(),c.getGreen(),c.getBlue());
-    }
 
     private ChatColor findTextColor(Player player){
         for (ChatColor color : ALL_COLORS) if(player.hasPermission("flyingchat."+color.name())) return color;
