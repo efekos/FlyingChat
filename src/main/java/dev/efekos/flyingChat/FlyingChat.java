@@ -49,7 +49,8 @@ public final class FlyingChat extends JavaPlugin implements Listener {
                entity.setText(findTextColor(p,instance)+e.getMessage());
                entity.setShadowed(true);
                entity.setBackgroundColor(Color.fromARGB(0,0,0,0));
-               entity.setTransformation(new Transformation(new Vector3f(),new Quaternionf(),new Vector3f(1.5f,1.5f,1.5f),new Quaternionf()));
+               float s = (float) instance.getConfig().getDouble("text-size");
+               entity.setTransformation(new Transformation(new Vector3f(),new Quaternionf(),new Vector3f(s,s,s),new Quaternionf()));
                world.addEntity(entity);
                new EntityFlyRunnable(entity).runTaskTimer(instance,1,1);
            }
