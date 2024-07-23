@@ -25,16 +25,26 @@
 
 package dev.efekos.flyingChat;
 
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.awt.*;
 
 public class EntityFlyRunnable extends BukkitRunnable {
 
     private final TextDisplay entity;
+    private final Player sender;
+    private final FlyingChat flyingChat;
     private int ticks = 0;
 
-    public EntityFlyRunnable(TextDisplay entity) {
+    public EntityFlyRunnable(TextDisplay entity, Player sender,FlyingChat i) {
         this.entity = entity;
+        this.sender = sender;
+        flyingChat = i;
     }
 
     @Override
@@ -46,5 +56,17 @@ public class EntityFlyRunnable extends BukkitRunnable {
         }
         entity.setTextOpacity((byte) (entity.getTextOpacity() - 4));
         entity.teleport(entity.getLocation().add(0, .1, 0));
+        spawnGlow();
     }
+
+    public void spawnGlow(){
+        if(!sender.hasPermission("flyingchat.glow"))return;
+        Color color = flyingChat.findTextColor(sender).asBungee().getColor();
+        org.bukkit.Color bukkitColor = org.bukkit.Color.fromRGB(color.getRed(), color.getGreen(), color.getBlue());
+
+        float size = entity.getTransformation().getScale().x;
+
+        entity.getWorld().spawnParticle(Particle.DUST,entity.getLocation(),1,size,size,size,new Particle.DustOptions(bukkitColor,(float) Math.random()*1.5f));
+    }
+
 }
