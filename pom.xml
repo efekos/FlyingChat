@@ -67,10 +67,6 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>efekosdev</id>
-            <url>https://efekos.dev/maven</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -79,16 +75,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.21-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.efekos</groupId>
-            <artifactId>Arn</artifactId>
-            <version>0.3.4</version>
-        </dependency>
-        <dependency>
-            <groupId>me.efekos</groupId>
-            <artifactId>Simpler</artifactId>
-            <version>1.8-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

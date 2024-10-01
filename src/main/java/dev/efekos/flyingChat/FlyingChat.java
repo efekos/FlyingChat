@@ -63,13 +63,7 @@ public final class FlyingChat extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-
         saveDefaultConfig();
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
